@@ -4,25 +4,28 @@ Simple test of code with Spring Boot
 Domain
 ------
 
-A comment system with basic CRUD operations:
-
-- Create new comment
-  - Removing any spam text / offensive language
-- Up vote a comment
-- Link a comment as a response
-- Retrieve all comments
-- Retrieve all comments ordered by a rank system
-- Delete a comment
+A comment system
 
 API
 ---
 
-PUT /comment
-POST /comment/{id}/up-vote
-POST /comment/{id}/in-response-to/{parent}
-GET /comment
-GET /comment/ranked
-DELETE /comment/{id}
+**PUT /comment**
+Create new comment removing any spam text / offensive language
+
+**POST /comment/{id}/up-vote**
+A positive vote to a comment
+
+**POST /comment/{id}/in-response-to/{parent}**
+Link a two comments as original and response
+
+**GET /comment**
+Retrieve all comments
+
+**GET /comment/ranked**
+Retrieve all comments ordered by a rank system
+
+**DELETE /comment/{id}**
+Delete a comment
 
 DEVELOPMENT DETAILS
 -------------------
@@ -42,13 +45,6 @@ DEVELOPMENT DETAILS
 - Groovy
   - Groovy script to externalize the logic of comment ranking
 
-TECHNICAL DEBT
---------------
-
-- Lack of RPM packaging
-- Lack of Docker integration
-- Lack of logs and any element to provide operative information
-
 RISKS
 -----
 
@@ -62,7 +58,12 @@ RISKS
 - Technical debt put in risk operations (logs, JMX, stats)
   - Involve infrastructure to provide non functional requirements
 
+ENHANCEMENTS
+------------
+
+https://github.com/rpcgen/simple/issues?q=is:issue+is:open+label:enhancement
+
 KNOWN BUGS
 ----------
 
-The functionality to link two comments allow the user to create circular references
+https://github.com/rpcgen/simple/issues?q=is:issue+is:open+label:bug
