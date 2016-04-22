@@ -31,7 +31,7 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     HttpServletResponse response;
 
     @Value("${local.server.port}")
-    int port;
+    private int port;
 
     @Before
     public void clear() {
@@ -43,7 +43,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         service.addComment("My Comment");
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .get("http://localhost:" + port + "/comment")
         .then()
                 .statusCode(200);
@@ -52,7 +54,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     @Test
     public void getCommentsResponseCodeMustBe204WhenResultIsEmpty() {
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .get("http://localhost:" + port + "/comment")
         .then()
                 .statusCode(204);
@@ -62,6 +66,7 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     public void putCommentsResponseCodeMustBe201() {
 
         given()
+                .authentication().basic("user", "pass")
                 .contentType("text/plain")
                 .body("My Comment")
         .when()
@@ -77,7 +82,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         long id = service.getComments(response).get(0).getId();
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .delete("http://localhost:" + port + "/comment/" + id)
         .then()
                 .statusCode(200);
@@ -86,7 +93,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     @Test
     public void deleteCommentsResponseCodeMustBe404WhenInvalidId() {
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .delete("http://localhost:" + port + "/comment/999")
         .then()
                 .statusCode(404);
@@ -99,7 +108,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         long id = service.getComments(response).get(0).getId();
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .post("http://localhost:" + port + "/comment/" + id + "/up-vote")
         .then()
                 .statusCode(200);
@@ -108,7 +119,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     @Test
     public void upVoteCommentsResponseCodeMustBe400WhenInvalidId() {
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .post("http://localhost:" + port + "/comment/999/up-vote")
         .then()
                 .statusCode(400);
@@ -125,7 +138,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
         long id1 = comments.get(0).getId();
         long id2 = comments.get(1).getId();
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .post("http://localhost:" + port + "/comment/" + id1 + "/in-response-to/" + id2)
         .then()
                 .statusCode(200);
@@ -138,9 +153,11 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         long id = service.getComments(response).get(0).getId();
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .post("http://localhost:" + port + "/comment/999/in-response-to/" + id)
-                .then()
+        .then()
                 .statusCode(400);
     }
 
@@ -151,9 +168,11 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         long id = service.getComments(response).get(0).getId();
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .post("http://localhost:" + port + "/comment/" + id + "/in-response-to/999")
-                .then()
+        .then()
                 .statusCode(400);
     }
 
@@ -162,7 +181,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
 
         service.addComment("My Comment");
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .get("http://localhost:" + port + "/comment/ranked")
         .then()
                 .statusCode(200);
@@ -171,7 +192,9 @@ public class SimpleCommentServiceStatusCodeIntegrationTest {
     @Test
     public void getRankedCommentsResponseCodeMustBe204WhenResultIsEmpty() {
 
-        when()
+        given()
+                .authentication().basic("user", "pass")
+        .when()
                 .get("http://localhost:" + port + "/comment/ranked")
         .then()
                 .statusCode(204);

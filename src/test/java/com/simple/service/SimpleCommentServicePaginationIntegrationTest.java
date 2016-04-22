@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -38,7 +39,8 @@ public class SimpleCommentServicePaginationIntegrationTest {
         for (int i = 0; i < 50; i++)
             service.addComment("My Comment " + i);
 
-        List response = when()
+        List response = given()
+                .authentication().basic("user", "pass")
                 .get("http://localhost:" + port + "/comment-pageable")
                 .as(List.class);
 
